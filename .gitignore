@@ -25,7 +25,7 @@ dist-ssr
 client/.env
 server/s.env
 node_modules/
-.env
+
 .env.*
 !.env.example
 
