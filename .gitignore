@@ -24,3 +24,9 @@ dist-ssr
 *.sw?
 client/.env
 server/.env
+node_modules/
+.env
+.env.*
+!.env.example
+
+dist/
