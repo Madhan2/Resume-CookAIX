@@ -16,6 +16,9 @@ const generateResume = async (req, res) => {
     const clerkUserId = req.auth.userId;
     const resumeData = req.body;
 
+    console.log('[Resume Generation] Received request from user:', clerkUserId);
+    console.log('[Resume Generation] Resume data:', JSON.stringify(resumeData, null, 2));
+
     if (!resumeData || !resumeData.personalInfo || !resumeData.personalInfo.fullName) {
       return res.status(400).json({
         success: false,
@@ -24,7 +27,9 @@ const generateResume = async (req, res) => {
     }
 
     // Call Groq AI Service to generate enhanced structured data
+    console.log('[Resume Generation] Calling Groq AI...');
     const enhancedContent = await generateResumeContent(resumeData);
+    console.log('[Resume Generation] Enhanced content received:', JSON.stringify(enhancedContent, null, 2));
 
     // Merge generated content with the base data
     const newResume = new Resume({
@@ -43,11 +48,14 @@ const generateResume = async (req, res) => {
       generatedContent: enhancedContent // Store the raw generated structured JSON just in case
     });
 
+    console.log('[Resume Generation] Saving resume to database...');
     const savedResume = await newResume.save();
+    console.log('[Resume Generation] Resume saved successfully:', savedResume._id);
 
     res.status(201).json(savedResume);
   } catch (error) {
-    console.error('Error generating resume:', error);
+    console.error('Error generating resume:', error.message);
+    console.error('Full error:', error);
     res.status(500).json({
       success: false,
       message: error.message || 'Failed to generate resume.'

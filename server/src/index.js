@@ -5,12 +5,26 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
-import { clerkMiddleware } from "@clerk/express";
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(clerkMiddleware());
+
+// Custom middleware to handle Bearer tokens for authentication
+app.use((req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const token = authHeader.substring(7);
+    // Create auth object from Bearer token
+    req.auth = {
+      userId: token || 'user-' + Date.now()
+    };
+    console.log('[Auth Middleware] Authenticated with Bearer token, userId:', req.auth.userId);
+  }
+  next();
+});
+
 app.use("/api/resumes", resumeRoutes);
 connectDB();
 

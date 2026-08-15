@@ -1,0 +1,32 @@
+{
+  "personalInfo": {
+    "fullName": "John Doe",
+    "email": "john@example.com",
+    "phone": "123-456-7890",
+    "location": "San Francisco, CA"
+  },
+  "experience": [
+    {
+      "company": "Tech Corp",
+      "jobTitle": "Senior Developer",
+      "location": "San Francisco",
+      "startDate": "2020",
+      "endDate": "2024",
+      "current": true,
+      "responsibilities": "Led development of key features",
+      "achievements": "Improved performance by 50%"
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of California",
+      "degree": "Bachelor of Science",
+      "fieldOfStudy": "Computer Science",
+      "startDate": "2016",
+      "endDate": "2020"
+    }
+  ],
+  "skills": ["JavaScript", "React", "Node.js", "MongoDB"],
+  "projects": [],
+  "certifications": []
+}

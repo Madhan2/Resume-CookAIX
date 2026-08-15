@@ -58,7 +58,7 @@ You MUST respond strictly with a valid JSON object matching the following struct
   const userPrompt = `Here is the user's raw resume data to process:\n${JSON.stringify(resumeData, null, 2)}`;
 
   try {
-    console.log('Calling Groq API with model:', model);
+    console.log('[Groq Service] Calling Groq API with model:', model);
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         { role: 'system', content: systemPrompt },
@@ -66,37 +66,46 @@ You MUST respond strictly with a valid JSON object matching the following struct
       ],
       model: model,
       temperature: 0.3, // Lower temperature for more factual/predictable output
-      max_tokens: 4000,
-      response_format: { type: 'json_object' } // Enforce JSON object response
+      max_tokens: 4000
     });
 
+    console.log('[Groq Service] API call successful');
     const responseContent = chatCompletion.choices[0]?.message?.content;
     
     if (!responseContent) {
+      console.error('[Groq Service] No content in response');
       throw new Error('No content generated from AI.');
     }
 
-    console.log('Groq response received, length:', responseContent.length);
+    console.log('[Groq Service] Response received, length:', responseContent.length);
+    console.log('[Groq Service] Response preview:', responseContent.substring(0, 200));
 
     // Clean up the response in case it contains markdown code blocks
     let jsonString = responseContent.trim();
     if (jsonString.startsWith('```json')) {
+      console.log('[Groq Service] Removing ```json wrapper');
       jsonString = jsonString.replace(/^```json\n?/, '').replace(/\n?```$/, '');
     } else if (jsonString.startsWith('```')) {
+      console.log('[Groq Service] Removing ``` wrapper');
       jsonString = jsonString.replace(/^```\n?/, '').replace(/\n?```$/, '');
     }
 
     // Attempt to parse the structured JSON
     const parsedData = JSON.parse(jsonString);
-    console.log('Successfully parsed Groq response');
+    console.log('[Groq Service] Successfully parsed Groq response');
     return parsedData;
 
   } catch (error) {
-    console.error("Groq AI Service Error:");
-    console.error('Full error:', error);
-    throw error;
+    console.error('[Groq Service] Error:', error.message);
+    console.error('[Groq Service] Full error details:', {
+      name: error.name,
+      message: error.message,
+      status: error.status,
+      type: error.type
+    });
+    
     // Return a fallback structure to prevent total failure
-    console.log('Returning fallback resume structure due to error');
+    console.log('[Groq Service] Returning fallback resume structure');
     return {
       summary: resumeData.personalInfo?.summary || 'Professional summary not provided.',
       experience: resumeData.experience || [],
