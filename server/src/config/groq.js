@@ -1,8 +1,17 @@
-const Groq = require('groq-sdk');
+import Groq from 'groq-sdk';
 
-// Initialize Groq client with API key from environment variables
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
-});
+let groqInstance = null;
 
-module.exports = groq;
+const getGroq = () => {
+  if (!groqInstance) {
+     if (!process.env.GROQ_API_KEY) {
+      throw new Error("GROQ_API_KEY is not configured");
+    }
+    groqInstance = new Groq({
+      apiKey: process.env.GROQ_API_KEY
+    });
+  }
+  return groqInstance;
+};
+
+export default getGroq;

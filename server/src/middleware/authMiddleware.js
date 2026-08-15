@@ -1,4 +1,4 @@
-const { clerkMiddleware, requireAuth } = require('@clerk/express');
+import { clerkMiddleware, requireAuth } from '@clerk/express';
 
 // The Clerk middleware automatically verifies the session token in the Authorization header
 // and attaches the user's information to req.auth
@@ -18,7 +18,7 @@ const ensureAuthenticated = (req, res, next) => {
   next();
 };
 
-module.exports = {
+export {
   clerkMiddleware,
   requireClerkAuth,
   ensureAuthenticated

@@ -1,11 +1,18 @@
-const Resume = require('../models/Resume');
-const { generateResumeContent } = require('../services/aiService');
-
+import Resume from '../models/Resume.js';
+import { generateResumeContent } from '../services/aiService.js';
 // @desc    Generate a new resume using AI and save it
 // @route   POST /api/resumes/generate
 // @access  Private
 const generateResume = async (req, res) => {
   try {
+    // Check if auth exists
+    if (!req.auth || !req.auth.userId) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: No valid Clerk session found.'
+      });
+    }
+
     const clerkUserId = req.auth.userId;
     const resumeData = req.body;
 
@@ -53,6 +60,13 @@ const generateResume = async (req, res) => {
 // @access  Private
 const getResumes = async (req, res) => {
   try {
+    if (!req.auth || !req.auth.userId) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: No valid Clerk session found.'
+      });
+    }
+
     const clerkUserId = req.auth.userId;
     const resumes = await Resume.find({ clerkUserId }).sort({ updatedAt: -1 });
     
@@ -71,6 +85,13 @@ const getResumes = async (req, res) => {
 // @access  Private
 const getResumeById = async (req, res) => {
   try {
+    if (!req.auth || !req.auth.userId) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: No valid Clerk session found.'
+      });
+    }
+
     const clerkUserId = req.auth.userId;
     const resume = await Resume.findById(req.params.id);
 
@@ -98,6 +119,13 @@ const getResumeById = async (req, res) => {
 // @access  Private
 const updateResume = async (req, res) => {
   try {
+    if (!req.auth || !req.auth.userId) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: No valid Clerk session found.'
+      });
+    }
+
     const clerkUserId = req.auth.userId;
     let resume = await Resume.findById(req.params.id);
 
@@ -132,6 +160,13 @@ const updateResume = async (req, res) => {
 // @access  Private
 const deleteResume = async (req, res) => {
   try {
+    if (!req.auth || !req.auth.userId) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized: No valid Clerk session found.'
+      });
+    }
+
     const clerkUserId = req.auth.userId;
     const resume = await Resume.findById(req.params.id);
 
@@ -153,7 +188,7 @@ const deleteResume = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   generateResume,
   getResumes,
   getResumeById,

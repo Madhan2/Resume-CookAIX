@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const ExperienceSchema = new mongoose.Schema({
   company: { type: String },
@@ -45,14 +45,12 @@ const PersonalInfoSchema = new mongoose.Schema({
 });
 
 const ResumeSchema = new mongoose.Schema({
-  clerkUserId: { 
-    type: String, 
+  clerkUserId: {
+    type: String,
     required: true,
-    index: true 
+    index: true
   },
-  title: { 
-    type: String 
-  },
+  title: { type: String },
   personalInfo: PersonalInfoSchema,
   summary: { type: String },
   education: [EducationSchema],
@@ -68,4 +66,6 @@ const ResumeSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Resume', ResumeSchema);
+const Resume = mongoose.model('Resume', ResumeSchema);
+
+export default Resume;

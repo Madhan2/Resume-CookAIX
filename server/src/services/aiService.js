@@ -1,7 +1,8 @@
-const groq = require('../config/groq');
+import getGroq from '../config/groq.js';
 
 const generateResumeContent = async (resumeData) => {
-  const model = process.env.GROQ_MODEL || 'llama3-70b-8192';
+  const groq = getGroq();
+  const model = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
 
   const systemPrompt = `You are an expert professional resume writer. Your task is to take the user's raw resume information and improve it, making it concise, professional, ATS-friendly, achievement-oriented, and grammatically correct.
 DO NOT fabricate or invent facts, qualifications, degrees, companies, or skills that the user did not provide.
@@ -57,6 +58,7 @@ You MUST respond strictly with a valid JSON object matching the following struct
   const userPrompt = `Here is the user's raw resume data to process:\n${JSON.stringify(resumeData, null, 2)}`;
 
   try {
+    console.log('Calling Groq API with model:', model);
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         { role: 'system', content: systemPrompt },
@@ -74,16 +76,37 @@ You MUST respond strictly with a valid JSON object matching the following struct
       throw new Error('No content generated from AI.');
     }
 
+    console.log('Groq response received, length:', responseContent.length);
+
+    // Clean up the response in case it contains markdown code blocks
+    let jsonString = responseContent.trim();
+    if (jsonString.startsWith('```json')) {
+      jsonString = jsonString.replace(/^```json\n?/, '').replace(/\n?```$/, '');
+    } else if (jsonString.startsWith('```')) {
+      jsonString = jsonString.replace(/^```\n?/, '').replace(/\n?```$/, '');
+    }
+
     // Attempt to parse the structured JSON
-    const parsedData = JSON.parse(responseContent);
+    const parsedData = JSON.parse(jsonString);
+    console.log('Successfully parsed Groq response');
     return parsedData;
 
   } catch (error) {
-    console.error('Groq AI Service Error:', error);
-    throw new Error('Failed to generate resume content using AI.');
+    console.error("Groq AI Service Error:");
+    console.error('Full error:', error);
+    throw error;
+    // Return a fallback structure to prevent total failure
+    console.log('Returning fallback resume structure due to error');
+    return {
+      summary: resumeData.personalInfo?.summary || 'Professional summary not provided.',
+      experience: resumeData.experience || [],
+      education: resumeData.education || [],
+      projects: resumeData.projects || [],
+      certifications: resumeData.certifications || [],
+      skills: resumeData.skills || [],
+      achievements: resumeData.achievements || []
+    };
   }
 };
 
-module.exports = {
-  generateResumeContent
-};
+export { generateResumeContent };
