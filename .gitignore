@@ -26,7 +26,7 @@ client/.env
 server/s.env
 node_modules/
 
-.env.*
+
 !.env.example
 
 dist/
