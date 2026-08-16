@@ -145,6 +145,18 @@ Users can:
   Deployment                    Vercel / Backend Hosting(Render)
 
 
+  **Category**	**Technology**
+
+Frontend	React + Vite
+Backend	Node.js + Express
+Database	MongoDB Atlas
+ODM	Mongoose
+Authentication	Clerk
+Generative AI	Groq API
+AI Model	Llama 3.3 70B Versatile
+Deployment	Vercel & Render (Backend Hosting)
+
+
 **AI Integration**
 
 Groq API is used for Generative AI-based resume content generation.(not all detail though)
