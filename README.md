@@ -146,7 +146,7 @@ Users can:
 
 
 
-**== Setup ==**
+## 🧱 Setup
 
 git clone https://github.com/Madhan2/Resume-CookAIX.git 
 
@@ -196,7 +196,7 @@ After that you can deploy the app to Vercel and Render.
 
 Note : Using only Vercel will crash the app as due to the Express backend, so replace the api url in vercel with the render app url. Then deploy the Vercel App.
 
-**Usage**
+## 🈸️ Usage
 
 1. Open the ResumeCookAIX web application.
 
