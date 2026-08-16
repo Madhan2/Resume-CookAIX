@@ -87,7 +87,7 @@ Users can:
 
 ## 🏗️ Architecture
 
-```text
+.
                     ┌───────────────────┐
                     │      User         │
                     └─────────┬─────────┘
@@ -117,3 +117,85 @@ Users can:
                                   │ MongoDB Atlas   │
                                   │ Resume Storage  │
                                   └─────────────────┘
+
+
+**📁 Resume Generation Workflow:**
+
+1.The user signs in using Clerk.
+2.The user enters their resume information.
+3.The React frontend sends the information to the Express backend.
+4.The backend verifies the authenticated user.
+5.The backend sends the user's information to the Groq AI API.
+6.Groq generates improved and structured resume content.
+7.The backend processes the generated response.
+8.The completed resume is stored in MongoDB Atlas.
+9.The generated resume is returned to the frontend.
+10.The user can view and manage the saved resume.
+
+**Technology Stack**
+**Component**                 **Technology**
+  Frontend                      React + Vite
+  Backend                       Node.js + Express
+  Database                      MongoDB Atlas
+  ODM                           Mongoose
+  Authentication                Clerk
+  Generative AI                 Groq API
+  AI Model                      Llama 3.3 70B Versatile
+  Deployment                    Vercel / Backend Hosting(Render)
+
+
+
+**== Setup ==**
+
+git clone https://github.com/Madhan2/Resume-CookAIX.git
+cd Resume-CookAIX
+
+**Frontend**
+cd client
+npm install
+
+**Create client/.env:**
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key
+VITE_API_URL=your_backend_url
+
+Run:
+npm run dev
+
+**Backend**
+In a new terminal:
+cd server
+npm install
+
+**Create server/.env:**
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=llama-3.3-70b-versatile
+CLERK_SECRET_KEY=your_clerk_secret_key
+
+
+Run:
+npm run dev
+> Keep .env files private and never commit them to GitHub.
+
+After that you can deploy the app to Vercel and Render.
+Note : Using only Vercel will crash the app as due to the Express backend, so replace the api url in vercel with the render app url. Then deploy the Vercel App.
+
+**Usage**
+
+1. Open the ResumeCookAIX web application.
+
+2. Sign up or log in using Clerk.
+
+3. Enter your personal, education, experience, project, skills, and other resume details.
+
+4. Click Generate Resume.
+
+5. Groq AI improves and structures the provided information.
+
+6. Review the generated resume.
+
+7. Your resume is saved to MongoDB and can be viewed, updated, or deleted.
+
+
+                       **==== Thats it , what more can i put here? 🤔 ====**
