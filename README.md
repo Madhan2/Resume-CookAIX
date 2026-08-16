@@ -133,28 +133,21 @@ Users can:
 9.The generated resume is returned to the frontend.
 10.The user can view and manage the saved resume.
 
-**Technology Stack**
-**Component**                 **Technology**
-  Frontend                      React + Vite
-  Backend                       Node.js + Express
-  Database                      MongoDB Atlas
-  ODM                           Mongoose
-  Authentication                Clerk
-  Generative AI                 Groq API
-  AI Model                      Llama 3.3 70B Versatile
-  Deployment                    Vercel / Backend Hosting(Render)
+
+## Technology Stack
+
+| Category | Technology |
+|---|---|
+| Frontend | React + Vite |
+| Backend | Node.js + Express |
+| Database | MongoDB Atlas |
+| ODM | Mongoose |
+| Authentication | Clerk |
+| Generative AI | Groq API |
+| AI Model | Llama 3.3 70B Versatile |
+| Deployment | Vercel & Render (Backend Hosting) |
 
 
-  **Category**	**Technology**
-
-Frontend	React + Vite
-Backend	Node.js + Express
-Database	MongoDB Atlas
-ODM	Mongoose
-Authentication	Clerk
-Generative AI	Groq API
-AI Model	Llama 3.3 70B Versatile
-Deployment	Vercel & Render (Backend Hosting)
 
 
 **AI Integration**
