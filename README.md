@@ -147,26 +147,32 @@ Users can:
 
 **== Setup ==**
 
-git clone https://github.com/Madhan2/Resume-CookAIX.git
+git clone https://github.com/Madhan2/Resume-CookAIX.git 
+
 cd Resume-CookAIX
 
 **Frontend**
+
 cd client
 npm install
 
 **Create client/.env:**
+
 VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key
 VITE_API_URL=your_backend_url
 
 Run:
+
 npm run dev
 
 **Backend**
+
 In a new terminal:
 cd server
 npm install
 
 **Create server/.env:**
+
 PORT=5000
 MONGODB_URI=your_mongodb_uri
 GROQ_API_KEY=your_groq_api_key
@@ -175,10 +181,12 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 
 
 Run:
+
 npm run dev
 > Keep .env files private and never commit them to GitHub.
 
 After that you can deploy the app to Vercel and Render.
+
 Note : Using only Vercel will crash the app as due to the Express backend, so replace the api url in vercel with the render app url. Then deploy the Vercel App.
 
 **Usage**
