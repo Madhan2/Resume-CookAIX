@@ -145,6 +145,26 @@ Users can:
   Deployment                    Vercel / Backend Hosting(Render)
 
 
+**AI Integration**
+
+Groq API is used for Generative AI-based resume content generation.(not all detail though)
+
+User-provided resume information is sent to the AI with instructions to improve grammar, wording, professionalism, and ATS-friendliness.
+
+The AI is instructed not to invent qualifications, experience, skills, or other facts.
+
+The response is returned as structured JSON, making it easy to process and store individual resume sections.
+
+
+**Key Design Decisions**
+
+React + Express separation: React handles the UI, while Express manages API requests, AI integration, authentication, and database operations.
+
+Clerk authentication: Protects user-specific functionality and associates each resume with its authenticated user.
+
+MongoDB Atlas: Stores generated resumes for persistent access and management.
+
+
 
 ## 🧱 Setup
 
